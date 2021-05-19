@@ -63,3 +63,11 @@
 - **Внесены изменения**
     - Было `function findSuccess(data) {`;
     - Стало  `function findSuccess(games) {`
+
+
+### Рефактор кода
+
+- Заменены все `var` на  `const` и `let`
+- в `\middleware\validate-session.js:5` добалено строгое сравнение
+    - Было `if (req.method == 'OPTIONS') {`
+    - Стало `if (req.method === 'OPTIONS') {`
