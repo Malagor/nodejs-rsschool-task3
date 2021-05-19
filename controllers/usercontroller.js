@@ -1,8 +1,8 @@
-var router = require('express').Router();
-var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
+const router = require('express').Router();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-var User = require('../models/user');
+const User = require('../models/user');
 
 router.post('/signup', (req, res) => {
   User.create({
@@ -35,7 +35,7 @@ router.post('/signin', (req, res) => {
         user.passwordHash,
         function (err, matches) {
           if (matches) {
-            var token = jwt.sign({ id: user.id }, 'lets_play_sum_games_man', {
+            const token = jwt.sign({ id: user.id }, 'lets_play_sum_games_man', {
               expiresIn: 60 * 60 * 24,
             });
             res.json({
