@@ -2,7 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/user');
+const User = require('../db').import('../models/user');
 
 router.post('/signup', (req, res) => {
   User.create({
@@ -22,6 +22,7 @@ router.post('/signup', (req, res) => {
     },
 
     function signupFail(err) {
+      console.error('Error create user');
       res.status(500).send(err.message);
     }
   );

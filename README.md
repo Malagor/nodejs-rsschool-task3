@@ -13,56 +13,66 @@
 - **Внесены изменения**
     - установил моудль командой `npm i -S bcrypt`
 
-#### 3. TypeError: require(...).import is not a function
-- **Место** `\controllers\usercontroller.js:5`
-- **Описание** Не правильно подключен модуль
-- **Внесены изменения**
-    - Было `var User = require('../db').import('../models/user')`;
-    - Стало  `var User = require('../models/user');`
-
-#### 4. TypeError: require(...).import is not a function
-- **Место** `\controllers\gamecontroller.js:2`
-- **Описание** Не правильно подключен модуль
-- **Внесены изменения**
-    - Было `var Game = require('../db').import('../models/game');`;
-    - Стало  `var Game = require('../models/game');`
-
-#### 5. SyntaxError: Function statements require a function name
+#### 3. SyntaxError: Function statements require a function name
 - **Место** `\models\game.js:1`
 - **Описание** Функция не имеет имени, но фактически не экспортирована
 - **Внесены изменения**
     - Было `function(sequelize, DataTypes) {`;
     - Стало  `module.exports = function(sequelize, DataTypes) {`
     
-#### 6. ReferenceError: routers is not defined
+#### 4. ReferenceError: routers is not defined
 - **Место** `\controllers\gamecontroller.js:112`
 - **Описание** Ошибка в имени экспортируемой сущности
 - **Внесены изменения**
     - Было `module.exports = routers;`;
     - Стало  `module.exports = router;`
 
-#### 7. TypeError: db.sync is not a function
+#### 5. TypeError: db.sync is not a function
 - **Место** `\app.js:7`
 - **Описание** Вызов несуществующей функции. В нашем случае из db ничего не экспортировано
 - **Внесены изменения**
     - В файл `\db.js:18` добавлен экспорт `module.exports = sequelize;`
 
-#### 8. TypeError: require(...).import is not a function
+#### 6. TypeError: require(...).import is not a function
 - **Место** `\middleware\validate-session.js:2`
 - **Описание** Не правильно подключен модуль
 - **Внесены изменения**
     - Было `var User = require('sequelize').import('../models/user');`;
-    - Стало  `var User = require('../models/user');`
+    - Стало  `var User = require('../db').import('../models/user');`
 
 
 ### Логические ошибки
 
-#### 9. Unused parameter 'data'
+#### 7. Unused parameter 'data'
 - **Место** `controllers/gamecontroller.js:6`
 - **Описание** Полученные данные помещены в переменную, которая далее не используется, при этом используется не корректная переменная в строке `8` этого же файла
 - **Внесены изменения**
     - Было `function findSuccess(data) {`;
     - Стало  `function findSuccess(games) {`
+    
+#### 8. Not defined server port
+- **Место** `\app.js:17` строка не совпадает с оригиналом, добавлены строки
+- **Описание** при использовании метода `app.listen` не передан порт прослушки
+- **Внесены изменения**
+    - Было `app.listen(function () {`;
+    - Стало  `app.listen(process.env.DB_PORT || 4000, function () {` - указан порт и номер порта вынесен в переменные среды   
+
+
+#### 9. body-parser is deprecated
+- **Место** `\app.js:10` строка не совпадает с оригиналом, добавлены строки
+- **Описание** конструктор `body-parser` больше не используется. Следует использовать конкретные методы преобазования
+- **Внесены изменения**
+    - Было `app.use(bodyParser);`;
+    - Стало  
+        ```
+        app.use(bodyParser.urlencoded());
+        app.use(bodyParser.json());
+        ```
+   - Также добавил подключение модуля в начале файла 
+        ```
+        const bodyParser = require('body-parser');
+        ```
+
 
 
 ### Рефактор кода
