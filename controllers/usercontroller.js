@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../db').import('../models/user');
+const EXPIRES_TIME_SEC = 60 * 60 * 24;
 
 router.post('/signup', (req, res) => {
   User.create({
@@ -13,7 +14,7 @@ router.post('/signup', (req, res) => {
   }).then(
     function signupSuccess(user) {
       let token = jwt.sign({ id: user.id }, 'lets_play_sum_games_man', {
-        expiresIn: 60 * 60 * 24,
+        expiresIn: EXPIRES_TIME_SEC,
       });
       res.status(200).json({
         user: user,
