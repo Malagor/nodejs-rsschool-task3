@@ -11,10 +11,18 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.3.0",
-    "pg": "^7.6.0",
+    "pg": "^8.6.0",
     "sequelize": "^4.41.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.5"
+    "dotenv": "^9.0.2",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "nodemon": "^1.18.5",
+    "prettier": "^2.3.0"
   }
 }
